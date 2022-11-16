@@ -1,0 +1,130 @@
+<section>
+    {{> header}}
+    <div class="main-content">
+        <div class="container center">
+            <section class="inner-layout">
+                <h2>Create Quiz</h2>
+                <form action="" method="post">
+                    <div class="container quiz-title">
+                        <label for="qtitle"><b>Quiz Title</b></label>
+                        <input type="text" placeholder="Enter Title" name="quiztitle" required>
+                        <button type="button" onclick="showCreateOption()">Add Options</button>
+                    </div>
+                    <div class="container quiz-questions" style="display: none;">
+                        <span>Please select correct answer</span>
+                        <div>
+                            <label for="qtitle"><b>Question 1</b></label>
+                            <input type="text" placeholder="Enter Title" name="qtitle" index="1" required>
+                            <hr>
+                            <div class="options">
+                                <div class="container question-options">
+                                    <input type="radio" name="o_answer" required>
+                                    <input type="text" placeholder="Enter Option" name="o_title" required>
+                                    <input type="number" placeholder="Enter Score" name="o_socre" required>
+                                </div>
+                            </div>
+                            <a class= "add-new" onclick="addNewOption()">Add New</a>
+                            <button type="button" onclick="nextQuestion()">Next Question</button>
+                        </div>
+                    </div>
+                    <div style="margin-right: 100px; margin-left: 100px;">
+                        <button type="button" onclick="saveQuestion()">Save</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    var data={
+        quizTitle: undefined,
+        questions: []
+    }
+    var index = 1;
+
+    function saveQuestion(){
+        if(data.questions.length == 0){
+            alert("please add options");
+            return
+        }
+        $.ajax({
+            url: "/quiz/create",
+            method: 'post',
+            data: data,
+            success: function (result) {
+                if(result.quizCreated){
+                    window.location.href = "/home";
+                }else{
+                    alert("Data Validation failed");
+                }
+            }
+        });
+    }
+
+    function nextQuestion(){
+        debugger
+        var qOptions = [];
+        if( $('input[name=qtitle]').val() == ""){
+            alert("Please provide question title");
+            return;
+        };
+        if(!$('input[type=radio][name="o_answer"]').is(':checked')){
+            alert("please select correct answer");
+            return;
+        }
+        $('options[0].children[0].children[0]').is(':checked')
+        var options = $('.options');
+        for(var i=0; i < options.children().length; i++){
+            var obj = {
+                isAnswer: $(options.children()[i].children[0]).is(':checked'),
+                title: $(options.children()[i].children[1]).val(),
+                score: $(options.children()[i].children[2]).val(),
+            }
+            qOptions.push(obj);
+        }
+        data.questions.push({
+            title: $('input[name=qtitle]').val(),
+            options: qOptions
+        });
+        $('.quiz-questions').html('');
+        $('.quiz-questions').html(getNextQuestionHtml(index));
+    }
+
+    function addNewOption(){
+        var newOptionHtml = `<div class="container question-options">
+                                    <input type="radio" name="o_answer" required>
+                                    <input type="text" placeholder="Enter Option" name="o_title" required>
+                                    <input type="number" placeholder="Enter Score" name="o_socre" required>
+                                </div>`;
+        $('.options').append(newOptionHtml);
+    }
+    
+    function showCreateOption(){
+        if( $('input[name=quiztitle]').val() == ""){
+            alert("Please provide quiz title");
+            return;
+        };
+        data.quizTitle = $('input[name=quiztitle]').val();
+        $('.quiz-title').attr('style', 'display: none');
+        $('.quiz-questions').attr('style', 'display: block');
+    }
+
+    function getNextQuestionHtml(index){
+        var html = `<span>Please select correct answer</span>
+                        <div>
+                            <label for="qtitle"><b>Question ${index + 1}</b></label>
+                            <input type="text" placeholder="Enter Title" name="qtitle" index="1" required="">
+                            <hr>
+                            <div class="options">
+                                <div class="container question-options">
+                                    <input type="radio" name="o_answer" required="">
+                                    <input type="text" placeholder="Enter Option" name="o_title" required="">
+                                    <input type="number" placeholder="Enter Score" name="o_socre" required="">
+                                </div>
+                            </div>
+                            <a class="add-new" onclick="addNewOption()">Add New</a>
+                            <button type="button" onclick="nextQuestion()">Next Question</button>
+                        </div>`;
+        return html;
+    }
+</script>

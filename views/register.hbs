@@ -1,0 +1,50 @@
+<div class="container center">
+    <section class="inner-layout">
+        <h2>Register</h2>
+        <form action="" method="post">
+            <div class="container">
+                <label for="fname"><b>First Name</b></label>
+                <input type="text" placeholder="Enter First Name" name="fname" required>
+                <label for="lname"><b>Last Name</b></label>
+                <input type="text" placeholder="Enter Last Name" name="lname" required>
+                <label for="email"><b>Email</b></label>
+                <input type="email" placeholder="Enter Email" name="email" required>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                <label for="psw"><b>Confirm Password</b></label>
+                <input type="password" placeholder="Enter Confirm Password" name="confirmpsw" required>
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </section>
+</div>
+<script>
+    $("form").submit(function (event) {
+        var data = $('form').serializeArray();
+        debugger
+        if(data[3].value !== data[4].value){
+            event.preventDefault();
+            alert("Password and confirm password does not match");
+            return;
+        }else{
+            $.ajax({
+                url: "/register",
+                method: 'post',
+                data: {
+                    "firstName": data[0].value,
+                    "lastName": data[1].value,
+                    "email": data[2].value,
+                    "password": data[3].value
+                },
+                success: function (result) {
+                    if(result.isRegister){
+                        window.location.href = "/";
+                    }else{
+                        alert("Invalid Data");
+                    }
+                }
+            });
+            event.preventDefault();
+        }
+    });
+</script>

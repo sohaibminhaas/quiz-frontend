@@ -1,0 +1,65 @@
+<section>
+    {{> header}}
+</section>
+<div class="container main-content">
+    <h2 class="small-heading"><b>{{data.title}}</b></h2>
+    <hr>
+    <div class="container">
+        <input type="hidden" value="{{data.id}}" id="quizId">
+        {{#each data.questions}}
+            <div class="quiestion-title">
+                <h2>{{this.title}}</h2>
+            </div>
+            <div class="options">
+                {{#each this.answers}}
+                    <div class="container question-options">
+                        <input type="radio" name="o_answer_{{this.questionId}}" questionId="{{this.questionId}}" answerId="{{this.id}}" required>
+                        <label for="qtitle"><b>{{this.title}}</b></label>
+                    </div>
+                 {{/each}}
+            </div>
+            <hr>
+        {{/each}}
+        <div style="display: flex; justify-content: center;">
+            <button style="width: 20%;" type="button" onclick="saveAnswers()">Save</button>
+        </div>
+    </div>
+</div>
+<script>
+    var data= {
+        quizId: undefined,
+        answers: []
+    }
+    $('input[type="radio"]').change(function(event){
+        var answer = {
+            questionId: event.currentTarget.getAttribute("questionId"),
+            answerId: event.currentTarget.getAttribute("answerId"),
+        }
+        for(var i=0; i<data.answers.length; i++){
+            if(answer.questionId === data.answers[i].questionId){
+                data.answers.splice(i, 1);
+            }
+        }
+        data.answers.push(answer);
+    })
+    function saveAnswers(){
+        if(data.answers.length == 0){
+            alert("Please select atleast one answer!");
+            return
+        }
+        data.quizId = $('#quizId').val();
+        $.ajax({
+            url: "/quiz/attempt",
+            method: 'post',
+            data: data,
+            success: function (result) {
+                if(result.quizAttempted){
+                    window.location.reload;
+                }
+                else{
+                    alert("Something went wrong");
+                }
+            }
+        });
+    }
+</script>

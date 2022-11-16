@@ -1,0 +1,68 @@
+<section>
+    {{> header}}
+</section>
+<div class="container main-content">
+    <h2 class="small-heading"><b>Quiz Created</b></h2>
+    <div class="table-style">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Quiz Id</th>
+                    <th>Quiz Titile</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#if data }}
+                    {{#each data}}
+                        <tr>
+                            <td class="s-no"><a href="/quiz/{{this.id}}" target="_blank">{{this.id}}</a></td>
+                            <td class="s-no">{{this.title}}</td>
+                        </tr>
+                    {{/each}}
+                {{else}}
+                    <tr>
+                        <td></td>
+                        <td colspan="2"> No Data Found</td>
+                    </tr>
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container main-content">
+    <h2 class="small-heading"><b>Quiz Attempted</b></h2>
+    <div class="table-style">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Quiz Id</th>
+                    <th>Quiz Titile</th>
+                    <th>total Questions</th>
+                    <th>Score(%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#if attempts }}
+                    {{#each attempts}}
+                        <tr>
+                            <td class="s-no"><a href="/quiz/{{this.quizId}}" target="_blank">{{this.quizId}}</a></td>
+                            <td class="s-no">{{this.title}}</td>
+                            <td class="s-no">{{this.totalQuestions}}</td>
+                            <td class="s-no">{{Percentage this.score this.totalScore}}</td>
+                        </tr>
+                    {{/each}}
+                {{else}}
+                    <tr>
+                        <td></td>
+                        <td colspan="2"> No Data Found</td>
+                    </tr>
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready( function () {
+        $('.table').DataTable();
+    });
+</script>

@@ -1,0 +1,148 @@
+/* Login Style */
+
+form {border: 3px solid #f1f1f1;}
+input[type=text], input[type=password], input[type=email], input[type=number] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.btn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: blue;
+}
+
+.container {
+  padding: 16px;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+.inner-layout {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 10%;
+}
+
+.header-class{
+  padding: 14px;
+  background-color: #04AA6D;
+}
+
+
+header div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+header .class {
+  position: relative;
+}
+
+header .class .column-2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+header .class .company-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 15px;
+  text-align: center;
+  color: white;
+}
+
+header .class .company-info h3 {
+  width: 100%;
+  margin: 0;
+  font-weight: 800;
+  text-shadow: 0 3px 6px #00000029;
+  font-size: clamp(17px, 2vw, 24px);
+  line-height: 1;
+  margin-top: 0;
+}
+
+header .class .company-info h5 {
+  width: 100%;
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(13px, 1.5vw, 18px);
+  line-height: 1;
+}
+
+header .action-buttons a{
+    text-decoration: none;
+    font-weight: bolder;
+    padding: 7px;
+    margin-right: 50px;
+    background-color: brown;
+    color: white;
+}
+
+.question-options{
+  display: flex;
+  padding: unset;
+}
+.question-options input{
+  margin: 10px;
+  padding: 8px 12px;
+}
+
+.add-new{
+  font-size: 14px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+  margin: 10px
+}
+
+.main-content{
+  padding: 25px;
+}

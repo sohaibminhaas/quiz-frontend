@@ -2,6 +2,7 @@
     {{> header}}
 </section>
 <div class="container main-content">
+    <img src="../loader.gif" class="loader" style="display:none;">
     <h2 class="small-heading"><b>{{data.title}}</b></h2>
     <hr>
     <div class="container">
@@ -47,14 +48,17 @@
             alert("Please select atleast one answer!");
             return
         }
+        $('.loader').show();
         data.quizId = $('#quizId').val();
         $.ajax({
             url: "/quiz/attempt",
             method: 'post',
             data: data,
             success: function (result) {
+                $('.loader').hide();
+                debugger
                 if(result.quizAttempted){
-                    window.location.reload;
+                    window.location.href = "/home";
                 }
                 else{
                     alert("Something went wrong");

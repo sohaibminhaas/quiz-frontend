@@ -1,6 +1,7 @@
 <section>
     {{> header}}
     <div class="main-content">
+        <img src="../loader.gif" class="loader" style="display:none;">
         <div class="container center">
             <section class="inner-layout">
                 <h2>Create Quiz</h2>
@@ -47,11 +48,14 @@
             alert("please add options");
             return
         }
+        $('.loader').show();
         $.ajax({
             url: "/quiz/create",
             method: 'post',
             data: data,
             success: function (result) {
+                $('.loader').hide();
+                debugger
                 if(result.quizCreated){
                     window.location.href = "/home";
                 }else{
@@ -62,7 +66,6 @@
     }
 
     function nextQuestion(){
-        debugger
         var qOptions = [];
         if( $('input[name=qtitle]').val() == ""){
             alert("Please provide question title");
@@ -72,7 +75,6 @@
             alert("please select correct answer");
             return;
         }
-        $('options[0].children[0].children[0]').is(':checked')
         var options = $('.options');
         for(var i=0; i < options.children().length; i++){
             var obj = {

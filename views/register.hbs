@@ -1,4 +1,5 @@
 <div class="container center">
+    <img src="../loader.gif" class="loader" style="display:none;">
     <section class="inner-layout">
         <h2>Register</h2>
         <form action="" method="post">
@@ -21,12 +22,12 @@
 <script>
     $("form").submit(function (event) {
         var data = $('form').serializeArray();
-        debugger
         if(data[3].value !== data[4].value){
             event.preventDefault();
             alert("Password and confirm password does not match");
             return;
         }else{
+            $('.loader').show();
             $.ajax({
                 url: "/register",
                 method: 'post',
@@ -37,6 +38,7 @@
                     "password": data[3].value
                 },
                 success: function (result) {
+                    $('.loader').hide();
                     if(result.isRegister){
                         window.location.href = "/";
                     }else{

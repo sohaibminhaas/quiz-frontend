@@ -45,5 +45,9 @@ app.listen(port, () => console.log(`App listening to port ${port}`));
 
 
 Handlebars.registerHelper("Percentage", function (score, totalScore) {
-    return (parseInt(score) / parseInt(totalScore) ) * 100;
+    if(parseInt(score) == 0 && parseInt(totalScore) == 0){
+        return 0;
+    }else{
+        return (parseInt(score) / parseInt(totalScore) ) * 100;;
+    }
 });

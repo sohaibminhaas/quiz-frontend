@@ -44,6 +44,10 @@
     var index = 1;
 
     function saveQuestion(){
+        var res = updatePostedObject();
+        if(!res){
+            return;
+        }
         if(data.questions.length == 0){
             alert("please add options");
             return
@@ -66,14 +70,24 @@
     }
 
     function nextQuestion(){
+        index = index + 1;
+        var res = updatePostedObject();
+        if(!res){
+            return;
+        }
+        $('.quiz-questions').html('');
+        $('.quiz-questions').html(getNextQuestionHtml(index));
+    }
+
+    function updatePostedObject(){
         var qOptions = [];
         if( $('input[name=qtitle]').val() == ""){
             alert("Please provide question title");
-            return;
+            return false;
         };
         if(!$('input[type=radio][name="o_answer"]').is(':checked')){
             alert("please select correct answer");
-            return;
+            return false;
         }
         var options = $('.options');
         for(var i=0; i < options.children().length; i++){
@@ -88,8 +102,8 @@
             title: $('input[name=qtitle]').val(),
             options: qOptions
         });
-        $('.quiz-questions').html('');
-        $('.quiz-questions').html(getNextQuestionHtml(index));
+
+        return true
     }
 
     function addNewOption(){
@@ -114,7 +128,7 @@
     function getNextQuestionHtml(index){
         var html = `<span>Please select correct answer</span>
                         <div>
-                            <label for="qtitle"><b>Question ${index + 1}</b></label>
+                            <label for="qtitle"><b>Question ${index}</b></label>
                             <input type="text" placeholder="Enter Title" name="qtitle" index="1" required="">
                             <hr>
                             <div class="options">

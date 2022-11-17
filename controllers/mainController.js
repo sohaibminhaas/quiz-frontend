@@ -32,7 +32,7 @@ router.post("/register", (req, res) => {
 router.get("/home", (req, res) => {
     if (req.session.user) {
         console.log("eq.session.user=====", req.session.user)
-        axios.get(process.env.BASEURL + `/user/quizzes?userId=${req.session.user.id}` , { "Content-Type": "application/json", })
+        axios.get(process.env.BASEURL + `/user/quizzes` , { "Content-Type": "application/json", })
             .then((allQuizes) => {
                 axios.get(process.env.BASEURL + `/quiz/attempts/${req.session.user.id}` , { "Content-Type": "application/json", })
                 .then((allAttempts) => {
